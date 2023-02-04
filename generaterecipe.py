@@ -2,7 +2,7 @@ import json
 import sortFunc
 
 class generate:
-    def generate_recipe(self, ingredients):
+    def generate_recipe(self, ingredients, mode):
 
         f = open('recipes_with_nutritional_info.json')
         data = json.load(f)
@@ -100,7 +100,15 @@ class generate:
 
         #outside dish forloop
         #returns sorted list of compressed dishes
-        return sortFunc.sortOut(out, sortFunc.sortMode.NORMAL)
+        sMode = sortFunc.sortMode.NORMAL
+        if mode == "Normal": sMode = sortFunc.sortMode.NORMAL
+        if mode == "High Calories": sMode = sortFunc.sortMode.HICAL
+        if mode == "Low Calories": sMode = sortFunc.sortMode.LOWCAL
+        if mode == "Low Sugar": sMode = sortFunc.sortMode.LOWSUG
+        if mode == "Low Salt": sMode = sortFunc.sortMode.LOWSOD
+        if mode == "High Protein": sMode = sortFunc.sortMode.HIPRO
+        if mode == "Low Fats": sMode = sortFunc.sortMode.LOWFAT
+        return sortFunc.sortOut(out, sMode)
 
 
 

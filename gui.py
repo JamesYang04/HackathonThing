@@ -1,9 +1,10 @@
 import tkinter as tk
 import webbrowser
 from generaterecipe import generate
-from PIL import Image, ImageTk
+from PIL import Image as imgg, ImageTk
 import receipts
-import math
+from tkinter import *
+import sortFunc
 def parseRecipe(rr):
     ret = "You can make " + rr['Title'] + "!\n\n"
     ret += "Ingredients: " + ' ,'.join(rr['Ingredients']) + "\n\n"
@@ -44,7 +45,7 @@ def get_ingredients():
     ingredients = textbox.get().split(',')
     global recipe
     test1 = generate()
-    recipe = test1.generate_recipe(ingredients)
+    recipe = test1.generate_recipe(ingredients, clicked)
     if len(recipe) == 0:
         recipe_label.config(text="Sorry, no recipe found", wraplength=800)
         back_button.config(state="disabled")
@@ -65,8 +66,8 @@ root = tk.Tk()
 root.title("Recipe Generator")
 root.geometry("1440x900")
 
-image = Image.open("logo.png")
-image = image.resize((600, 600), Image.LANCZOS)
+image = imgg.open("logo.png")
+image = image.resize((600, 600), imgg.LANCZOS)
 image = ImageTk.PhotoImage(image)
 
 
@@ -87,6 +88,14 @@ button.pack(pady=10)
 
 button2 = tk.Button(root, text="Read Receipt", command=read_image)
 button2.pack(pady=10)
+
+sortModes = ["Normal", "High Calories", "Low Calories", "Low Sugar", "Low Salt", "High Protein", "Low Fat"]
+
+clicked = StringVar()
+clicked.set("Normal")
+
+selectMode = OptionMenu(root, clicked, *sortModes)
+selectMode.pack(pady=10)
 
 recipe_frame = tk.Frame(root)
 recipe_frame.pack(pady=10)
