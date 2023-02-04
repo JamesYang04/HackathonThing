@@ -1,5 +1,6 @@
 import random
 import json
+import sortFunc
 
 class generate:
     def generate_recipe(self, ingredients):
@@ -9,6 +10,7 @@ class generate:
         data = json.load(f)
 
         assumed = ["leavening agents", "spices", "wheat flour", "sugars", "water", "oil", "butter", "salt", "rice flour", "vinegar", "honey"]
+        out = []
         for dish in data:
             need = dish['ingredients']
             can = True
@@ -21,18 +23,20 @@ class generate:
                     if sList[0] in assumed:
                         found = True
                         break
-                    if ing in sList[0]:
+                    elif ing in sList[0]:
                         found = True
                         customCount += 1
                         break
-                    if sList[0] in ing:
+                    elif sList[0] in ing:
                         found = True
                         customCount += 1
                         break
                 if not found or customCount == 0:
                     can = False
                     break
+            
             if can:
+                """
                 print("We can make " + dish['title'])
                 ret += "We can make " + dish['title'] + '\n'
                 print("using these ingredients: ")
@@ -44,6 +48,67 @@ class generate:
                     ret += str(i) +  ") " + qty + " " + unit + " " + s + '\n'
                 print("\n")
                 ret += '\n'
-        return ret
+        return ret"""
+
+                #Format: 
+                #[Title (string), Ingredients (string list), Nutrition Facts (dictionary string -> string), Link (string), MatchNum]
+
+                #Title
+                compressedDish = {}
+                compressedDish['Title'] = dish['title']
+
+                #Ingredients
+                temp = []
+                N = len(dish['ingredients'])
+                for i in range(0, N):
+                    s = dish['ingredients'][i]['text']
+                    qty = dish['quantity'][i]['text']
+                    unit = dish['unit'][i]['text']
+                    temp.append(qty + " " + unit + " " + s)
+                compressedDish['Ingredients'] = temp
+
+                #Nutrition Facts
+                temp = {}
+                energy = 0
+                fat = 0
+                protein = 0
+                salt = 0
+                saturates = 0
+                sugars = 0
+                for i in range(0, N):
+                    fat += dish['nutr_per_ingredient'][i]['fat']
+                    energy += dish['nutr_per_ingredient'][i]['nrg']
+                    protein += dish['nutr_per_ingredient'][i]['pro']
+                    saturates += dish['nutr_per_ingredient'][i]['sat']
+                    salt += dish['nutr_per_ingredient'][i]['sod']
+                    sugars += dish['nutr_per_ingredient'][i]['sug']
+                
+                temp['Fat'] = fat
+                temp['Energy'] = energy
+                temp['Protein'] = protein
+                temp['Salt'] = salt
+                temp['Saturates'] = saturates
+                temp['Sugars'] = sugars
+
+                compressedDish['Nutrition Facts'] = temp
+
+                #Link
+                compressedDish['Link'] = dish['url']
+
+                #MatchNum
+                compressedDish['MatchNum'] = customCount
+
+                out.append(compressedDish)
+
+        #outside dish forloop
+        #sort(out)
+        return sortFunc.sortOut(out)
+
+
+
+
+
+
+
 
 
