@@ -14,6 +14,7 @@ def parseRecipe(rr):
     ret += "Nutritional Facts:\n"
     for cat in rr['Nutrition Facts'].keys():
         if cat == 'Energy': ret += cat + " " + str(round(rr['Nutrition Facts'][cat])) + 'cal\n'
+        elif cat == 'Salt': ret += cat + " " + str(round(rr['Nutrition Facts'][cat])) + 'mg\n'
         else: ret += cat + " " + str(round(rr['Nutrition Facts'][cat])) + 'g\n'
     return ret
 
