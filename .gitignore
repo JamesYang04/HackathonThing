@@ -129,5 +129,3 @@ dmypy.json
 .pyre/
 
 # API keys
-config.py
-cloudcredentials.json

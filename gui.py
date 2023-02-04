@@ -84,7 +84,7 @@ def get_ingredients():
         show_recipe_step(current_step)
 
 root = tk.Tk()
-root.title("Recipe Generator")
+root.title("PantryPal")
 root.geometry("1440x900")
 
 image = imgg.open("logo1.png")
