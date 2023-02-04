@@ -1,7 +1,5 @@
 import tkinter as tk
 import webbrowser
-from tkinter import ttk
-from tkinter import messagebox
 from generaterecipe import generate
 def parseRecipe(rr):
     ret = "You can make " + rr['Title'] + "!\n\n"
