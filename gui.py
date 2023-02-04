@@ -1,6 +1,7 @@
 import tkinter as tk
 import webbrowser
 from generaterecipe import generate
+from PIL import Image, ImageTk
 import receipts
 import math
 def parseRecipe(rr):
@@ -8,8 +9,8 @@ def parseRecipe(rr):
     ret += "Ingredients: " + ' ,'.join(rr['Ingredients']) + "\n\n"
     ret += "Nutritional Facts:\n"
     for cat in rr['Nutrition Facts'].keys():
-        if cat == 'Energy': ret += cat + " " + str(math.round(rr['Nutrition Facts'][cat])) + 'cal\n'
-        else: ret += cat + " " + str(math.round(rr['Nutrition Facts'][cat])) + 'g\n'
+        if cat == 'Energy': ret += cat + " " + str(round(rr['Nutrition Facts'][cat])) + 'cal\n'
+        else: ret += cat + " " + str(round(rr['Nutrition Facts'][cat])) + 'g\n'
     return ret
 
 def show_recipe_step(index):
@@ -64,7 +65,12 @@ root = tk.Tk()
 root.title("Recipe Generator")
 root.geometry("1440x900")
 
-header = tk.Label(root, text="TBD NAME", bg="lightblue", font=("TkDefaultFont", 30), height=5)
+image = Image.open("logo.png")
+image = image.resize((600, 600), Image.LANCZOS)
+image = ImageTk.PhotoImage(image)
+
+
+header = tk.Label(root, image=image, bg="white", font=("TkDefaultFont", 30), height=180)
 header.pack(fill="x")
 
 spacer = tk.Frame(root, height=20)

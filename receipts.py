@@ -62,7 +62,7 @@ def grabReceipt():
         max_tokens=1024,
         n=1,
         stop=None,
-        temperature=0.5,
+        temperature=0.4,
     )
 
     grocery_items = response["choices"][0]["text"].strip()
@@ -81,11 +81,6 @@ def grabReceipt():
 
     grocery_items = ', '.join(grocery_items).strip(', ')
     print(grocery_items)
-
-    
-    # print("Grocery items:")
-    # for item in grocery_items:
-    #     print(item)
 
 
     return grocery_items
