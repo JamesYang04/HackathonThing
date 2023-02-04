@@ -1,5 +1,6 @@
 import os
 import json
+import sortFunc
 
 
 class generate:
@@ -102,8 +103,8 @@ class generate:
                 out.append(compressedDish)
 
         #outside dish forloop
-        #sort(out)
-        return sortFunc.sortOut(out)
+        #returns sorted list of compressed dishes
+        return sortFunc.sortOut(out, sortFunc.sortMode.LOWCAL)
 
 
 
