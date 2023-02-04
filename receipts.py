@@ -3,6 +3,7 @@ import pytesseract
 import openai
 import config
 import re
+import os
 
 openai.api_key = config.api_key
 
@@ -65,7 +66,10 @@ response = openai.Completion.create(
 
 grocery_items = response["choices"][0]["text"].strip().split(", ")
 
-"""print("Grocery items:")
+"""
+print("Grocery items:")
 for item in grocery_items:
     print(item)
 """
+
+os.remove("receipt0.png")
