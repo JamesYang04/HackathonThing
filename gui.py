@@ -5,9 +5,12 @@ from PIL import Image as imgg, ImageTk
 import receipts
 from tkinter import *
 import sortFunc
+import math
+
+def parseName(rr):
+    return "\nYou can make " + rr['Title'] + "!\n"
 def parseRecipe(rr):
-    ret = "You can make " + rr['Title'] + "!\n\n"
-    ret += "Ingredients: " + ' ,'.join(rr['Ingredients']) + "\n\n"
+    ret = "Ingredients: " + ' ,'.join(rr['Ingredients']) + "\n\n"
     ret += "Nutritional Facts:\n"
     for cat in rr['Nutrition Facts'].keys():
         if cat == 'Energy': ret += cat + " " + str(round(rr['Nutrition Facts'][cat])) + 'cal\n'
@@ -15,10 +18,11 @@ def parseRecipe(rr):
     return ret
 
 def show_recipe_step(index):
+    recipe_name.config(text=parseName(recipe[index]), wraplength=800)
     recipe_label.config(text=parseRecipe(recipe[index]), wraplength=800)
     global link
-    linkbutton.pack(pady=10)
     link = recipe[index]['Link']
+    linkbutton.pack(pady=10)
     back_button.config(state="normal" if index > 0 else "disabled")
     next_button.config(state="normal" if index < len(recipe) - 1 else "disabled")
     global current_step
@@ -40,14 +44,15 @@ def read_image():
     textbox.delete(0, tk.END)
     textbox.insert(0, ingredients)
         
-
+def onEnter(event):
+    get_ingredients()
 def get_ingredients():
     ingredients = textbox.get().split(',')
     global recipe
     test1 = generate()
-    recipe = test1.generate_recipe(ingredients, clicked)
+    recipe = test1.generate_recipe(ingredients, clicked.get())
     if len(recipe) == 0:
-        recipe_label.config(text="Sorry, no recipe found", wraplength=800)
+        recipe_name.config(text="Sorry, no recipe found", wraplength=800)
         back_button.config(state="disabled")
         next_button.config(state="disabled")
         back_button.pack_forget()
@@ -56,17 +61,32 @@ def get_ingredients():
     else:
         global current_step
         current_step = 0
+        button.pack_forget()
+        button2.pack_forget()
+        selectMode.pack_forget()
+        recipe_frame.pack_forget()
+        back_button.pack_forget()
+        recipe_name.pack_forget()
         recipe_label.pack_forget()
+        next_button.pack_forget()
+        linkbutton.pack_forget()
+
+        button.pack(pady=10)
+        button2.pack(pady=10)
+        selectMode.pack(pady=10)
+        recipe_frame.pack(pady=10)
         back_button.pack(side="left", padx=10, pady=10)
+        recipe_name.pack(padx=10)
         recipe_label.pack(side="left", padx=10)
         next_button.pack(side="left", padx=10, pady=10)
+
         show_recipe_step(current_step)
 
 root = tk.Tk()
 root.title("Recipe Generator")
 root.geometry("1440x900")
 
-image = imgg.open("logo.png")
+image = imgg.open("logo1.png")
 image = image.resize((600, 600), imgg.LANCZOS)
 image = ImageTk.PhotoImage(image)
 
@@ -82,6 +102,7 @@ label.pack(pady=10)
 
 textbox = tk.Entry(root, width = 50)
 textbox.pack(pady=10)
+textbox.bind("<Return>", onEnter)
 
 button = tk.Button(root, text="Generate Recipe", command=get_ingredients)
 button.pack(pady=10)
@@ -98,9 +119,11 @@ selectMode = OptionMenu(root, clicked, *sortModes)
 selectMode.pack(pady=10)
 
 recipe_frame = tk.Frame(root)
-recipe_frame.pack(pady=10)
 
 back_button = tk.Button(recipe_frame, text="<", command=go_back, state="disabled")
+
+recipe_name = tk.Label(recipe_frame, text="", justify=tk.CENTER, font=("Vani", 18, "bold"), wraplength=800)
+recipe_name.pack(padx=10)
 
 recipe_label = tk.Label(recipe_frame, text="", justify=tk.LEFT, font=("TkDefaultFont", 12), wraplength=800)
 recipe_label.pack(side="left", padx=10)
