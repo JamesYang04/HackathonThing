@@ -3,7 +3,6 @@ import pytesseract
 import openai
 import config
 import re
-import os
 
 def grabReceipt():
     openai.api_key = config.api_key
@@ -80,7 +79,7 @@ def grabReceipt():
         grocery_items[i] = j.strip()
 
     grocery_items = ', '.join(grocery_items).strip(', ')
-    print(grocery_items)
+    #print(grocery_items)
 
 
     return grocery_items
