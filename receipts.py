@@ -51,7 +51,7 @@ def grabReceipt():
 
     # clean up text
     text = re.sub(pattern, '', text).lower()
-    print(text)
+    # print(text)
 
     prompt = f"Extract only the grocery items from the following text, remove all numbers: {text}"
     # lines = text.split("\n")
@@ -65,13 +65,15 @@ def grabReceipt():
         temperature=0.5,
     )
 
-    grocery_items = response["choices"][0]["text"].strip().split(", ")
+    grocery_items = response["choices"][0]["text"].strip()
+    grocery_items = grocery_items.replace("\n", ", ")
+    print(grocery_items)
+    
+    # print("Grocery items:")
+    # for item in grocery_items:
+    #     print(item)
+
 
     return grocery_items
 
-"""print("Grocery items:")
-for item in grocery_items:
-    print(item)
-"""
-
-os.remove("receipt0.png")
+# os.remove("receipt0.png")

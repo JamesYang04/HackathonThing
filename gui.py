@@ -33,12 +33,8 @@ def open_hyperlink():
 
 def read_image():
     ingredients = receipts.grabReceipt()
-    string = ""
-    for i in range(0, len(ingredients) - 1):
-        string += ingredients[i] + ", "
-    string += ingredients[len(ingredients)-1]
     textbox.delete(0, tk.END)
-    textbox.insert(0, string)
+    textbox.insert(0, ingredients)
         
 
 def get_ingredients():

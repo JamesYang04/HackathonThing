@@ -100,7 +100,7 @@ class generate:
 
         #outside dish forloop
         #returns sorted list of compressed dishes
-        return sortFunc.sortOut(out, sortFunc.sortMode.LOWCAL)
+        return sortFunc.sortOut(out, sortFunc.sortMode.NORMAL)
 
 
 
