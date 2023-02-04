@@ -2,10 +2,9 @@ import cv2
 import pytesseract
 import openai
 import config
+import re
 
 openai.api_key = config.api_key
-
-# image = cv2.imread("walmart-receipt.jpeg")
 
 cam = cv2.VideoCapture(0)
 cv2.namedWindow("Test")
@@ -46,6 +45,12 @@ close = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel, iterations=1)
 # OCR
 text = pytesseract.image_to_string(gray)
 
+pattern = r'[0-9]'
+
+# clean up text
+text = re.sub(pattern, '', text).lower()
+print(text)
+
 prompt = f"Extract only the grocery items from the following text, remove all numbers: {text}"
 # lines = text.split("\n")
 
@@ -60,7 +65,7 @@ response = openai.Completion.create(
 
 grocery_items = response["choices"][0]["text"].strip().split(", ")
 
-print("Grocery items:")
+"""print("Grocery items:")
 for item in grocery_items:
-    item = item.lower()
     print(item)
+"""
