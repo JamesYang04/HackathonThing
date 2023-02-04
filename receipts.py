@@ -68,6 +68,20 @@ def grabReceipt():
     grocery_items = response["choices"][0]["text"].strip()
     grocery_items = grocery_items.replace("\n", ", ")
     print(grocery_items)
+
+    grocery_items = grocery_items.split(',')
+
+    S = grocery_items.copy()
+    for i in S:
+        if i.isspace():
+            grocery_items.remove(i)
+
+    for i,j in enumerate(grocery_items):
+        grocery_items[i] = j.strip()
+
+    grocery_items = ', '.join(grocery_items).strip(', ')
+    print(grocery_items)
+
     
     # print("Grocery items:")
     # for item in grocery_items:
