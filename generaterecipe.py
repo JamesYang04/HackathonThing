@@ -1,13 +1,21 @@
-import random
+import os
 import json
-import sortFunc
+from google.cloud import storage
+
 
 class generate:
     def generate_recipe(self, ingredients):
         # Available recipes
         ret = ""
-        f = open('recipes_with_nutritional_info.json')
-        data = json.load(f)
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "cloudcredentials.json"
+        client = storage.Client()
+        bucket = client.bucket("foodrecipes")
+        blob = bucket.blob("recipes_with_nutritional_info.json")
+        datatemp = blob.download_as_string()
+        # Download the JSON data
+        data = json.loads(datatemp.decode('utf-8'))
+        # f = open('recipes_with_nutritional_info.json')
+        # data = json.load(f)
 
         assumed = ["leavening agents", "spices", "wheat flour", "sugars", "water", "oil", "butter", "salt", "rice flour", "vinegar", "honey"]
         out = []
