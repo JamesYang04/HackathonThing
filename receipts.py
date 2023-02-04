@@ -1,9 +1,9 @@
 import cv2
 import pytesseract
 import openai
+import config
 
-
-openai.api_key = "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"
+openai.api_key = config.api_key
 
 # image = cv2.imread("walmart-receipt.jpeg")
 
