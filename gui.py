@@ -1,6 +1,7 @@
 import tkinter as tk
 import webbrowser
 from generaterecipe import generate
+import receipts
 def parseRecipe(rr):
     ret = "You can make " + rr['Title'] + "!\n\n"
     ret += "Ingredients: " + ' ,'.join(rr['Ingredients']) + "\n\n"
@@ -29,6 +30,16 @@ def go_next():
 
 def open_hyperlink():
     webbrowser.open_new(link)
+
+def read_image():
+    ingredients = receipts.grabReceipt()
+    string = ""
+    for i in range(0, len(ingredients) - 1):
+        string += ingredients[i] + ", "
+    string += ingredients[len(ingredients)-1]
+    textbox.delete(0, tk.END)
+    textbox.insert(0, string)
+        
 
 def get_ingredients():
     ingredients = textbox.get().split(',')
@@ -69,6 +80,9 @@ textbox.pack(pady=10)
 
 button = tk.Button(root, text="Generate Recipe", command=get_ingredients)
 button.pack(pady=10)
+
+button2 = tk.Button(root, text="Read Receipt", command=read_image)
+button2.pack(pady=10)
 
 recipe_frame = tk.Frame(root)
 recipe_frame.pack(pady=10)
