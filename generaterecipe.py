@@ -3,7 +3,6 @@ import json
 import sortFunc
 #from google.cloud import storage
 
-
 class generate:
     def generate_recipe(self, ingredients):
         # Available recipes
@@ -111,8 +110,8 @@ class generate:
                 out.append(compressedDish)
 
         #outside dish forloop
-        #sort(out)
-        return sortFunc.sortOut(out)
+        #returns sorted list of compressed dishes
+        return sortFunc.sortOut(out, sortFunc.sortMode.LOWCAL)
 
 
 
