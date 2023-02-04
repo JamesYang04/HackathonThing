@@ -14,25 +14,25 @@ class sortMode(Enum):
 
 
 def sortCompressedDishesNORMAL(compDish):
-    return -100*compDish['MatchNum']
+    return -100000*compDish['MatchNum']
 
 def sortCompressedDishesHICAL(compDish):
-    return -100*compDish['MatchNum'] - compDish['Nutrition Facts']['Energy']
+    return -100000*compDish['MatchNum'] - compDish['Nutrition Facts']['Energy']
 
 def sortCompressedDishesLOWCAL(compDish):
-    return -100*compDish['MatchNum'] + compDish['Nutrition Facts']['Energy']
+    return -100000*compDish['MatchNum'] + compDish['Nutrition Facts']['Energy']
 
 def sortCompressedDishesLOWSUG(compDish):
-    return -100*compDish['MatchNum'] + compDish['Nutrition Facts']['Sugars']
+    return -100000*compDish['MatchNum'] + compDish['Nutrition Facts']['Sugars']
 
 def sortCompressedDishesLOWSOD(compDish):
-    return -100*compDish['MatchNum'] + compDish['Nutrition Facts']['Salt']
+    return -100000*compDish['MatchNum'] + compDish['Nutrition Facts']['Salt']
 
 def sortCompressedDishesHIPRO(compDish):
-    return -100*compDish['MatchNum'] - compDish['Nutrition Facts']['Protein']
+    return -100000*compDish['MatchNum'] - compDish['Nutrition Facts']['Protein']
 
 def sortCompressedDishesLOWFAT(compDish):
-    return -100*compDish['MatchNum'] + compDish['Nutrition Facts']['Fat'] 
+    return -100000*compDish['MatchNum'] + compDish['Nutrition Facts']['Fat'] 
 
 def sortOut(out, mode):
     if (mode == sortMode.NORMAL): return sorted(out, key=sortCompressedDishesNORMAL)
