@@ -89,7 +89,7 @@ recipe_frame.pack(pady=10)
 
 back_button = tk.Button(recipe_frame, text="<", command=go_back, state="disabled")
 
-recipe_label = tk.Label(recipe_frame, text="", justify=tk.LEFT, font=("TkDefaultFont", 20), wraplength=800)
+recipe_label = tk.Label(recipe_frame, text="", justify=tk.LEFT, font=("TkDefaultFont", 12), wraplength=800)
 recipe_label.pack(side="left", padx=10)
 
 next_button = tk.Button(recipe_frame, text=">", command=go_next, state="disabled")

@@ -3,6 +3,7 @@ import pytesseract
 import openai
 import config
 import re
+import os
 
 def grabReceipt():
     openai.api_key = config.api_key
@@ -68,7 +69,9 @@ def grabReceipt():
 
     return grocery_items
 
-    """print("Grocery items:")
-    for item in grocery_items:
-        print(item)
-    """
+"""print("Grocery items:")
+for item in grocery_items:
+    print(item)
+"""
+
+os.remove("receipt0.png")
