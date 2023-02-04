@@ -2,12 +2,14 @@ import tkinter as tk
 import webbrowser
 from generaterecipe import generate
 import receipts
+import math
 def parseRecipe(rr):
     ret = "You can make " + rr['Title'] + "!\n\n"
     ret += "Ingredients: " + ' ,'.join(rr['Ingredients']) + "\n\n"
     ret += "Nutritional Facts:\n"
     for cat in rr['Nutrition Facts'].keys():
-        ret += cat + " " + str(rr['Nutrition Facts'][cat]) + '\n'
+        if cat == 'Energy': ret += cat + " " + str(math.round(rr['Nutrition Facts'][cat])) + 'cal\n'
+        else: ret += cat + " " + str(math.round(rr['Nutrition Facts'][cat])) + 'g\n'
     return ret
 
 def show_recipe_step(index):
