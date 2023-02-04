@@ -88,7 +88,16 @@ class generate:
                 temp['Saturates'] = saturates
                 temp['Sugars'] = sugars
 
-                compressedDish['Nutrition Facts'] = temp
+                #Filter out weird results
+                accepted = False
+                if energy <= 5000 and fat <= 500:
+                    if mode == 'Low Calories' and energy >= 1000:
+                        continue
+                    elif mode == 'High Calories' and energy <= 400:
+                        continue
+                    else:
+                        compressedDish['Nutrition Facts'] = temp
+                        accepted = True
 
                 #Link
                 compressedDish['Link'] = dish['url']
@@ -96,7 +105,8 @@ class generate:
                 #MatchNum
                 compressedDish['MatchNum'] = customCount
 
-                out.append(compressedDish)
+                if accepted:
+                    out.append(compressedDish)
 
         #outside dish forloop
         #returns sorted list of compressed dishes
